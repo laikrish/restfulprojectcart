@@ -72,26 +72,32 @@ public class OrderController {
 		return new ResponseEntity<Order>(orderService.updateOrder(order), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/order")
-	public ResponseEntity<Order> deleteOrder(@RequestBody Order order) {
-		return new ResponseEntity<Order>(orderService.deleteOrder(order.getOrderId()), HttpStatus.OK);
+	@DeleteMapping("/order/del/{orderId}")
+	public ResponseEntity<Order> deleteOrder(@PathVariable int orderId,@RequestBody Order order) {
+		return new ResponseEntity<Order>(orderService.deleteOrder(orderId,order),HttpStatus.OK);
 	}
 
-	@PutMapping("/order/cancel")
-	public ResponseEntity<Order> cancelOrder(@RequestBody Order order) {
-		return new ResponseEntity<Order>(orderService.cancelOrder(order.getOrderId()), HttpStatus.OK);
+	@PutMapping("/order/{orderId}")
+	public ResponseEntity<Order> cancelOrder(@PathVariable int orderId,@RequestBody Order order) {
+		return new ResponseEntity<Order>(orderService.cancelOrder(orderId,order), HttpStatus.OK);
 	}
 
-	@GetMapping("/orders/{orderId}")
+	@GetMapping("/order/{orderId}")
 	public ResponseEntity<Order> getOrderById(@PathVariable int orderId) {
-		return new ResponseEntity<Order>(orderService.getOrder(orderId), HttpStatus.OK);
+		return new ResponseEntity<Order>(orderService.getOrderByOrderId(orderId), HttpStatus.OK);
 
 	}
 
-	@GetMapping("/customer/orders/{customerId}")
-	public ResponseEntity<List<Order>> getOrders(@PathVariable int customerId) {
-		return new ResponseEntity<List<Order>>(orderService.getOrderByCustomerId(customerId), HttpStatus.OK);
+	@GetMapping("/allorders")
+	public ResponseEntity<List<Order>> getOrders() {
+		return new ResponseEntity<List<Order>>(orderService.getOrders(),HttpStatus.OK);
 
 	}
+	
+	@GetMapping("/orders/{customerId}")
+	public ResponseEntity<List<Order>> getOrderByCustomerId(@PathVariable int customerId) {
+		return new ResponseEntity<List<Order>>(orderService.getOrderByCustomerId(customerId),HttpStatus.OK);
 
+	}
+	
 }

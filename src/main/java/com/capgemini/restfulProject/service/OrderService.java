@@ -14,11 +14,11 @@ public interface OrderService {
 
 	public Order updateOrder(Order order);
 
-	public Order cancelOrder(int orderId);
+	public Order cancelOrder(int orderId,Order order);
 
-	public Order deleteOrder(int orderId);
+	public Order deleteOrder(int orderId,Order order);
 
-	public Order getOrder(int orderId);
+	public Order getOrderByOrderId(int orderId);
 
 	public List<Order> getOrderByCustomerId(int customerId);
 

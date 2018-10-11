@@ -23,13 +23,13 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order submitOrder(Order order) {
 		order.setStatus("Processing");
-		Set<LineItem> cartItems = order.getItems();
+		/*Set<LineItem> cartItems = order.getItems();
 		double totalPrice = 0;
 		for (LineItem item : cartItems) {
 			totalPrice += item.getPrice();
 		}
 		order.setTotal(totalPrice);
-		order.setDate(LocalDate.now());
+		order.setDate(LocalDate.now());*/
 		return orderRepository.save(order);
 	}
 
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Order cancelOrder(int orderId) {
+	public Order cancelOrder(int orderId,Order order) {
 		Optional<Order> optional = orderRepository.findById(orderId);
 		if (optional.isPresent()) {
 			optional.get().setStatus("Cancelled");
@@ -54,17 +54,19 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Order deleteOrder(int orderId) {
+	public Order deleteOrder(int orderId,Order order) {
 		Optional<Order> optional = orderRepository.findById(orderId);
 		if (optional.isPresent()) {
 			optional.get().setStatus("Deleted");
-			return orderRepository.save(optional.get());
+			 orderRepository.delete(optional.get());
+			
 		}
-		return null;
+	return null;
 	}
+	
 
 	@Override
-	public Order getOrder(int orderId) {
+	public Order getOrderByOrderId(int orderId) {
 		Optional<Order> optional = orderRepository.findById(orderId);
 		if (optional.isPresent()) {
 			return optional.get();
@@ -85,8 +87,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> getOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return orderRepository.findAll();
 	}
 
 }
